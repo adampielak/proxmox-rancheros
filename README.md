@@ -28,6 +28,7 @@ Change the Variables and IP according to the setup on variable.yml file and add_
     `vmid:`
 
       `- { id: '101' ,node: 'pve' }`
+      
       `- { id: '102' ,node: 'pve1' }`
     
     Configure the RAM of the VM.
@@ -41,6 +42,7 @@ Change the Variables and IP according to the setup on variable.yml file and add_
 
 3. Configure Ansible hosts file `/etc/ansible/hosts `to add the proxmox server IP as well as password less ssh between the host to run without promting
 	`[proxmox]`
+
 	`192.168.x.x` 
 
 4. Run Playbook for the host.
