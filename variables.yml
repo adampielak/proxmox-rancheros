@@ -1,12 +1,12 @@
 createBasetemplate: true
 mountNfs: false
-node:
-  - 192.168.1.249
+baseosid: 100
+basetemplate: basetemplate
+
 vmid:
   - { id: '101' ,node: 'pve' }
   - { id: '102' ,node: 'pve1' }
   
 ram: 4096
-basetemplate: basetemplate
 disksize: 32
 net: model=e1000,bridge=vmbr0,firewall=0

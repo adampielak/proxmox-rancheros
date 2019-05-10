@@ -1,4 +1,5 @@
 # Setup RancherOS over Proxmox
+There are two files which need to be configured before running playbook.
 
 Change the Variables and IP according to the setup on variable.yml file and add_nfs.sh file.
 
@@ -46,11 +47,11 @@ Change the Variables and IP according to the setup on variable.yml file and add_
 
 	`192.168.x.x` 
 
-4. Run Playbook for the host.
+4. Run Playbook on the host.
 	``` sh 
 	ansible-playbook setup-vm.yml
 	```
 
 Some points to check before running.
-1. Make sure you allow proxmox server and all nodes from the NFS server's `/etc/export` and `exportfs -a` has been executed before.
+1. Make sure you allow proxmox server and all nodes from the NFS server's `/etc/export` and execute `exportfs -a` before running playbook.
 2. Correct user is used while using executing Ansible Playbook.
