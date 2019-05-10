@@ -26,7 +26,7 @@ Change the Variables and IP according to the setup on variable.yml file and add_
     
     Enter list of VM with there ID and specify target node of the proxmox cluster. You can add as many as VM in the list.
     `vmid:`
-    
+
       `- { id: '101' ,node: 'pve' }`
       `- { id: '102' ,node: 'pve1' }`
     
@@ -39,9 +39,14 @@ Change the Variables and IP according to the setup on variable.yml file and add_
     Configure the Network of the VM.    
     `net: model=e1000,bridge=vmbr0,firewall=0`
 
-3. Configure Ansible hosts file to add the proxmox server details as well as password less ssh between the host to run without promting
+3. Configure Ansible hosts file `/etc/ansible/hosts `to add the proxmox server IP as well as password less ssh between the host to run without promting
+	`[proxmox]`
+	`192.168.x.x` 
 
 4. Run Playbook for the host.
+	``` sh 
+	ansible-playbook setup-vm.yml
+	```
 
 Some points to check before running.
 1. Make sure you allow proxmox server and all nodes from the NFS server's `/etc/export` and `exportfs -a` has been executed before.
