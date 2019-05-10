@@ -1,0 +1,35 @@
+---
+- hosts: proxmox
+  
+  vars_files:
+    - variables.yml
+
+  remote_user: root
+    
+  tasks:
+    - name: Install Dependency
+      pip:
+        name: proxmoxer
+
+    - name: Mount NFS   
+      script: add_nfs.sh
+      when: mountNfs
+
+    - name: Create Base Os Template
+      command: "{{ item }}"
+      with_items:  
+          - "qm create {{ baseosid }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom nfs:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file=nfs:{{ disksize }},format=qcow2 --net0 {{ net }}"
+          # - qm stop 100
+          - qm template 100
+      when: createBasetemplate
+
+    - name: Create-VM
+      command: "qm clone 100 {{item.id}} --target={{item.node}}"
+      # command: "qm create {{ item.id }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom nfs:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file=nfs:{{ disksize }},format=qcow2 --net0 {{ net }}"
+      with_items: "{{ vmid }}"
+
+    - name: Add VM to HA
+      command: "ha-manager add vm:{{item.id}}"
+      with_items: "{{ vmid }}"
+
+
