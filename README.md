@@ -6,6 +6,7 @@ Change the Variables and IP according to the setup on variable.yml file and add_
     
     -: Add IP address of the nfs server. 
     `server 192.168.x.x` put your NFS server IP.
+
     -: Add the path of the nfs 
     `export /path/to/nfs`
 
@@ -25,6 +26,7 @@ Change the Variables and IP according to the setup on variable.yml file and add_
     
     Enter list of VM with there ID and specify target node of the proxmox cluster. You can add as many as VM in the list.
     `vmid:`
+    
       `- { id: '101' ,node: 'pve' }`
       `- { id: '102' ,node: 'pve1' }`
     
