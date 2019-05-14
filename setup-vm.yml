@@ -18,14 +18,14 @@
     - name: Create Base Os Template
       command: "{{ item }}"
       with_items:  
-          - "qm create {{ baseosid }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom nfs:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file=nfs:{{ disksize }},format=qcow2 --net0 {{ net }}"
-          # - qm stop 100
-          - qm template 100
+          - "qm create {{ baseosid }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom {{ nfsname }}:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file={{ nfsname }}:{{ disksize }},format=qcow2 --net0 {{ net }}"
+          # - qm stop {{ baseosid }}
+          - qm template {{ baseosid }}
       when: createBasetemplate
 
     - name: Create-VM
-      command: "qm clone 100 {{item.id}} --target={{item.node}}"
-      # command: "qm create {{ item.id }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom nfs:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file=nfs:{{ disksize }},format=qcow2 --net0 {{ net }}"
+      command: "qm clone {{ baseosid }} {{item.id}} --target={{item.node}}"
+      # command: "qm create {{ item.id }} --agent enabled=1  --arch x86_64 --autostart 1 --balloon {{ ram }} --cdrom {{ nfsname }}:iso/rancheros.iso --memory {{ ram }} --name {{ basetemplate }} --ide0 file={{ nfsname }}:{{ disksize }},format=qcow2 --net0 {{ net }}"
       with_items: "{{ vmid }}"
 
     - name: Add VM to HA
