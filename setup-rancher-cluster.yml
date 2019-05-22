@@ -1,0 +1,36 @@
+---
+- hosts: rancher-master
+  
+  vars_files:
+    - variables.yml
+
+  remote_user: rancher
+    
+  tasks:
+
+    - name: Check Swarm State
+      command: docker info
+      register: docker_info
+
+    - name: Init Swarm
+      command: "docker swarm init --advertise-addr {{ ansible_br0['ipv4']['address'] }}"
+      when: "docker_info.stdout.find('Swarm: inactive') != -1"
+
+
+    - name: Get worker token
+      command: "docker swarm join-token -q worker"
+      register: worker_token
+
+    - name: "Get Manager token"
+      command: docker swarm join-token -q manager
+      register: manager_token
+
+- hosts: rancher-worker
+  vars_files:
+    - vars/variables.yml
+
+  remote_user: rancher
+    
+  tasks:
+    - name: Join Master
+      command: docker swarm join --token {{ hostvars['rancher-master1']['worker_token']['stdout'] }} {{ hostvars['rancher-master1']['ansible_br0']['ipv4']['address'] }}:2377"

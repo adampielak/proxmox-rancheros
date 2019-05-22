@@ -1,0 +1,8 @@
+[proxmox]
+10.0.1.5
+
+[rancher-master]
+rancher-master1 ansible_host=10.0.1.16 ansible_user=rancher
+
+[rancher-worker]
+rancher-worker1 ansible_host=10.0.1.14 ansible_user=rancher

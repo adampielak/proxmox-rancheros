@@ -1,0 +1,17 @@
+---
+- hosts: proxmox
+  
+  vars_files:
+    - variables.yml
+
+  remote_user: root
+    
+  tasks:
+    - name: Mount NFS   
+      script: add_nfs.sh
+      when: mountNfs
+
+    - name: Create Base Os Template
+      command: "qm create {{ base_os_id }} --agent enabled=1 --start  --arch x86_64 --autostart 1 --balloon {{ base_ram }} --cdrom nfs:iso/rancheros.iso --memory {{ base_ram }} --name {{ basetemplate }} --ide0 file=nfs:{{ base_disksize }},format=qcow2 --net0 {{ base_net0 }} --cores {{ base_cores }} --sockets {{ base_sockets }}"
+      when: createBasetemplate
+
