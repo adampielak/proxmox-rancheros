@@ -1,13 +1,35 @@
-createBasetemplate: false
-mountNfs: false
-baseosid: 100
+#Variables for creating BaseOS Template
+createBasetemplate: true
+base_os_id: 101
+base_ram: 4096
 basetemplate: basetemplate
-nfsname: nfs
+base_disksize: 32
+base_net0: model=virtio,bridge=vmbr0,firewall=0
+base_net1: model=virtio,bridge=vmbr0,firewall=0
+base_cores: 1
+base_sockets: 1
 
+
+
+#Variables For VM Creations
+
+mountNfs: true
 vmid:
-  - { id: '101' ,node: 'pve1' }
-  - { id: '102' ,node: 'pve2' }
+  - { id: '103' ,node: 'pve' }
+  - { id: '104' ,node: 'pve1' }
   
 ram: 4096
 disksize: 32
-net: model=e1000,bridge=vmbr0,firewall=0
+net0: model=virtio,bridge=vmbr0,firewall=0
+net1: model=virtio,bridge=vmbr0,firewall=0
+cores: 1
+sockets: 1
+
+
+#Variables for genrating RancherOS cloud-init file
+console: ubuntu
+ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDEW8sbT330fbE2bqeuERvDx/fuP4ZljtmQnCEpYMCdikPmdZ4VaBgbB0dLhe4mi/PfN/jJUzEvBsMG40ZV6uhHeUY0/ywpTwwL27jIM504ocGBJkE73T4jNIzUldyWFm+hkeJ8zHtrJj+WEuI1DsY49xxM2Ksh0XUV/kI11DtnsslgHzCCnKuJv54KFrBkge6PX4GQIEKCNGdLke4+FXgZ3a1nwt6gDcWcfPm7HpB76axxdv1MdekxlnUxpopUeg3E30FtFQcdnUt0kbRTCYKLZTyFU3jg1am2p07eDhJndnfnrY7pRevpLSobQNQG/mWd7/Ph5X5pZGvVaUW5sD5 ulap74@ulap74
+address: 10.0.1.80
+gateway: 10.0.1.1
+dhcp: "false"
+hostname: rancheros
