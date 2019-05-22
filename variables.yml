@@ -1,11 +1,12 @@
-createBasetemplate: true
+createBasetemplate: false
 mountNfs: false
 baseosid: 100
 basetemplate: basetemplate
+nfsname: nfs
 
 vmid:
-  - { id: '101' ,node: 'pve' }
-  - { id: '102' ,node: 'pve1' }
+  - { id: '101' ,node: 'pve1' }
+  - { id: '102' ,node: 'pve2' }
   
 ram: 4096
 disksize: 32
